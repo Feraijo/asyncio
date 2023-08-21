@@ -1,0 +1,9 @@
+.git/
+.pytest_cache/
+.idea/
+**/__pycache__/
+
+.flake8
+.gitignore
+.gitlab-ci.yml
+docker-compose*

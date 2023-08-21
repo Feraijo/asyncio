@@ -1,0 +1,29 @@
+version: "3"
+
+services:
+  weather_api:
+    build: ./weather_api
+    ports:
+      - "5000:5000"
+
+  async_scheduler:
+    build: ./async_scheduler
+    depends_on:
+      - db
+    environment:
+      PG_HOST: db
+      PG_PORT: 5432
+      PG_USER: test
+      PG_PWD: test
+      PG_DB: db_test
+      UPDATE_TIMER: 10
+
+  db:
+    image: postgres:alpine
+    restart: always
+    environment:
+      POSTGRES_DB: db_test
+      POSTGRES_USER : test
+      POSTGRES_PASSWORD: test
+    ports:
+      - 5444:5432

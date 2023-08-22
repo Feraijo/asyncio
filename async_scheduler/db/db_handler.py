@@ -9,11 +9,11 @@ from sqlalchemy.ext.asyncio import (AsyncSession, async_sessionmaker,
                                     create_async_engine)
 
 
-PG_USER = os.getenv('PG_USER', 'postgres')
-PG_PWD = os.getenv('PG_PWD', 'nomnom')
+PG_USER = os.getenv('PG_USER', 'test')
+PG_PWD = os.getenv('PG_PWD', 'test')
 PG_HOST = os.getenv('PG_HOST', 'localhost')
-PG_PORT = os.getenv('PG_PORT', 5432)
-PG_DB = os.getenv('PG_DB', 'postgres')
+PG_PORT = os.getenv('PG_PORT', 5444)
+PG_DB = os.getenv('PG_DB', 'db_test')
 CITIES_FILENAME = os.getenv('CITIES_FILENAME', '81_largest_city.txt')
 
 DATABASE_URL: str = f"postgresql+asyncpg://{PG_USER}:{PG_PWD}@{PG_HOST}:{PG_PORT}/{PG_DB}"
@@ -51,58 +51,9 @@ class AsyncDB:
     async def get_cities_list(self) -> Result[Tuple[City]]:
         async with self.async_session() as session:
             return await session.execute(select(City))
-        #await session.commit()
-        #return res
 
     async def update_cities_weather(self, cities_weather: List[dict]):
-        #for city_dict in cities_weather:
-
-        #self.session.add(Weather(city_id=city.id, **r['weather']))
-        pass
-
-
-# async def fetch_weather(aiohttp_session, session, city, url):
-#     async with aiohttp_session.get(url) as resp:
-#         r = await resp.json()
-#     session.add(Weather(city_id=city.id, **r['weather']))
-
-
-# async def select_and_update_objects(
-#     async_session: async_sessionmaker[AsyncSession],
-# ) -> None:
-#     async with async_session() as session:
-#         stmt = select(City)
-
-#         result = await session.execute(stmt)
-
-#         api_url = 'http://weather_api:5000/weather/'
-
-#         tasks = []
-#         async with aiohttp.ClientSession() as aiohttp_session:
-#             for city in result.scalars():
-#                 task = fetch_weather(aiohttp_session, session, city, f'{api_url}{city.name}')
-#                 tasks.append(asyncio.ensure_future(task))
-
-#             await asyncio.gather(*tasks)
-
-#         await session.commit()
-
-
-# async def async_main() -> None:
-#     db_engine = create_async_engine(DATABASE_URL, echo=True)
-
-#     async_session = async_sessionmaker(db_engine, expire_on_commit=False)
-
-#     async with db_engine.begin() as db_conn:
-#         await db_conn.run_sync(Base.metadata.create_all)
-
-#     await insert_objects(async_session)
-#     logger.info("DB init done.")
-
-#     logger.info(f"Update loop with period of {UPDATE_TIMER} seconds started.")
-#     while True:
-#         await asyncio.sleep(UPDATE_TIMER)
-#         await select_and_update_objects(async_session)
-#         logger.info("Weather update done.")
-
-#asyncio.run(async_main())
+        async with self.async_session() as session:
+            for city_dict in cities_weather:
+                session.add(Weather(city_id=city_dict['city_id'], **city_dict['weather']))
+            await session.commit()

@@ -28,18 +28,10 @@ async def async_main() -> None:
     api = WeatherAPI()
 
     logger.info(f"Update loop with period of {UPDATE_TIMER} seconds started.")
-    x = 1
     while True:
         await asyncio.sleep(UPDATE_TIMER)
-        if x < 2:
-            cities_list = await db.get_cities_list()
-            logger.warning([x for x in cities_list.scalars()])
-            cities_weather = await api.get_cities_weather(cities_list)
-            logger.critical([x for x in cities_weather])
-            #await db.update_cities_weather(cities_weather)
-
-            #await select_and_update_objects(async_session)
-            logger.info("Weather update done.")
-        x += 1
+        cities_list = await db.get_cities_list()
+        cities_weather = await api.get_cities_weather(cities_list)
+        await db.update_cities_weather(cities_weather)
 
 asyncio.run(async_main())

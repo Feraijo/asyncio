@@ -3,13 +3,15 @@ import os
 import yaml
 from pydantic_settings import BaseSettings
 
-here = os.path.abspath(os.path.dirname(__file__))
-with open(os.path.join(os.path.dirname(here), 'config/local.yml')) as f:
+par_dir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
+with open(os.path.join(os.path.dirname(par_dir), 'config/local.yml')) as f:
     sett_dict = yaml.load(f, Loader=yaml.FullLoader)
 
 
 class Settings(BaseSettings):
     PROJECT_NAME: str
+    PRJ_HOST: str
+    PRJ_PORT: int
 
     LOG_LEVEL: str
 

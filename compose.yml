@@ -16,7 +16,7 @@ services:
       PG_USER: test
       PG_PWD: test
       PG_DB: db_test
-      UPDATE_TIMER: 10
+      UPDATE_TIMER: 100
 
   db:
     image: postgres:alpine

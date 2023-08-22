@@ -17,4 +17,4 @@ RUN pip install --no-cache-dir -U setuptools pip pipenv \
 COPY . .
 
 # Run db init and update loop
-CMD ["python", "-u", "db.py"]
+CMD ["python", "-u", "main.py"]

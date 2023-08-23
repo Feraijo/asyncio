@@ -2,8 +2,8 @@ import asyncio
 import logging
 import os
 
-from db.db_handler import AsyncDB
 from api.api_handler import WeatherAPI
+from db.db_handler import AsyncDB
 
 logging.basicConfig(
     level=logging.INFO,
@@ -19,7 +19,6 @@ UPDATE_TIMER = int(os.getenv('UPDATE_TIMER', '5'))
 
 
 async def async_main() -> None:
-
     # init DB handler
     db = AsyncDB(logger)
     await db.fill_db_w_initial_data()

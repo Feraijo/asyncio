@@ -6,21 +6,21 @@ services:
     ports:
       - "5000:5000"
 
-  # async_scheduler:
-  #   build: ./async_scheduler
-  #   depends_on:
-  #     - db
-  #     - weather_api
-  #   environment:
-  #     API_URL: weather_api
-  #     API_PORT: 5000
-  #     PG_HOST: db
-  #     PG_PORT: 5432
-  #     PG_USER: test
-  #     PG_PWD: test
-  #     PG_DB: db_test
-  #     UPDATE_TIMER: 5
-  #     CITIES_FILENAME: 81_largest_city.txt
+  async_scheduler:
+    build: ./async_scheduler
+    depends_on:
+      - db
+      - weather_api
+    environment:
+      API_URL: weather_api
+      API_PORT: 5000
+      PG_HOST: db
+      PG_PORT: 5432
+      PG_USER: test
+      PG_PWD: test
+      PG_DB: db_test
+      UPDATE_TIMER: 5
+      CITIES_FILENAME: 81_largest_city.txt
 
   db:
     image: postgres:alpine

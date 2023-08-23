@@ -11,4 +11,3 @@ class Weather(BaseModel):
 class CityWeather(BaseModel):
     city_name: str
     weather: Weather
-

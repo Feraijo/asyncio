@@ -1,5 +1,6 @@
 from fastapi import APIRouter
-from weather_app.controllers.city_weather_controller import CityWeatherController
+from weather_app.controllers.city_weather_controller import \
+    CityWeatherController
 from weather_app.models.city_weather import CityWeather
 
 router = APIRouter()

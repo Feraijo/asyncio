@@ -1,4 +1,5 @@
 import asyncio
+
 from weather_app.models.city_weather import CityWeather
 from weather_app.utility.weather_randomizer import get_city_weather
 
